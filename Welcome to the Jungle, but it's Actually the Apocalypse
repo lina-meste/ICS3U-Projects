@@ -1,0 +1,384 @@
+'''
+Dev: Angelina
+Date: 11/28/20
+Adventure Game: Welcome to the Jungle, but it's Actually the Apocalyspe
+'''
+
+# IMPORTS
+
+# creates pauses
+import time
+
+# random number generator
+import random 
+
+# VARIABLES
+
+# makes game loop until done = True
+done = False
+
+# choice validation
+check = False
+
+# health -> if health reaches 5, then done = True
+health = 0
+
+# bandages -> used to restore 1 health
+bandages = 0
+
+# flaslight inv
+flashlight = 0
+
+# pan inv
+pan = 0
+
+# END -> too hurt -> forced restart
+if health >= 6:
+  print("You're too injured to continue.")
+  done = True
+
+# ENDING -> random -> forced restart
+if random.randrange(1, 100) == 50:
+  print("A zombie surprise attacks you and you die.")
+  done = True
+
+
+
+first_name = input("Before you begin your adventure, enter a first name: ")
+
+last_name = input(f"{first_name}? Interesting, now enter a last name: ")
+
+print()
+
+# INTRO
+print("To play this game you must choose your own actions. If \nyou die you may be sent back to your last checkpoint, but if \nit's a surprise attack then you're forced to start from the \nvery beginning.")
+time.sleep(6)
+print()
+print(f"Welcome to the apocalyspe, {first_name} {last_name}.\nIt's time to begin your story.")
+print()
+
+time.sleep(2)
+
+# after entering a new area, players save 
+
+location = "quarantine zone"
+
+while done == False:
+  # BEGINNING 
+
+  if location == "quarantine zone":
+    print("While out for your nightly walk, you notice a stray dog \nsniffing around the barbed wire that seperates your \nquarantine zone from the outside world that is filled with \nzombies.")
+    time.sleep(5)
+    print()
+    print("What will you do?")
+    while check == False:
+        choice = input("[1] go check out what the dog is sniffing \n[2] ignore the dog and keep walking \nEnter choice: ")
+        print()
+        if choice == "1" or choice.lower() == "go check out what the dog is sniffing":
+            check = True
+            print("You walk towards the dog and see that it was \nsniffing a hole. The soldiers don't let anyone out of the \nquarantine zone, so curiousity gets the better of you \nand you decide to shoo the dog away so that you can slide \nunder the fence.")
+            print()
+            time.sleep(7)
+            print()
+            location = "the wild"
+        elif choice == "2" or choice.lower() == "ignore dog" or choice.lower() == "keep walking" or choice.lower() == "ignore dog and keep walking":
+            check = True
+            print("You decide to ignore the dog. You may be curious, \nbut you don't want to face any danger.")
+            time.sleep(2)
+            print()
+            print("You walk home.")
+            print("...")
+            time.sleep(1)
+            print("Before you reach your apartment building, the door \nto an abandon restaurant burts open and you're dragged \ninside. It's too dark to see anything.")
+            time.sleep(5)
+            print()
+            print(f"'We saw you at the hole, {first_name}'")
+
+            choice = input("[1] who are you? \n[2] how do you know my name? \nEnter choice: ")
+
+            if choice == "1" or choice.lower() == "who are you?" or choice.lower() == "who are you":
+                print()
+                print("'We're the only people who want to get into the \nWild.'")
+                print()
+                time.sleep(2)
+            else:
+                print("'That's not important.'")
+                print()
+                time.sleep(1)
+            print("'Are you trying to see what it's really like behind \nthese fences?'")
+            choice1 = input("[1] yes, who doesn't \n[2] no, I would rather not die\nEnter choice: ")
+
+            if choice1 == "1" or choice1.lower() == "yes, who doesn't" or choice1.lower() == "yes":
+                print()
+                location = "resturant"
+            else:
+                # END -> not wanting to leave quarantine zone
+                print("'Alright, get out then. Enjoy being stuck here.'")
+                done = True
+        else:
+            print()
+            print("Invalid response. Try again-")
+            print()
+            check = False
+    
+  # THE WILD ALONE -> HARDER
+  elif location == "the wild":
+      print("You have reached the second checkpoint: the Wild.")
+      time.sleep(1)
+      print()
+      choice = input("You didn't think this through. Should you \ngo back to the quarantine zone and get supplies first?\n[1] yes \n[2] no\nEnter choice: ")
+      if choice == "1" or choice.lower() == "yes":
+        print(f'You begin to crawl back under the fence, but your \nshirt gets caught in the wire as a soldier turns the \ncorner. "{first_name} {last_name}, surrender or you will be tagged." \nYou dont surrender. He shoots at you.')
+        time.sleep(7)
+        print()
+
+        health += random.randrange(1,4)
+        
+        print(f"Thanks to his stormtrooper-like aim, you only take some damage. \nYour health is now at {health}. If you reach 6 you die.")
+        print()
+        time.sleep(5)
+
+        choice = input("You bolt directly towards the forest before the soldier can see where you went. \nYou find yourself on a path leading two ways. Will you- [1] go right [2] go left \nEnter choice: ")
+        if choice == "1" or choice.lower() == "go right":
+            print("You go right and eventually come across a camp.")
+            print()
+            time.sleep(3)
+            choice = input("Do you want to explore the camp? [1] yes \n[2] no \nEnter choice: ")
+            if choice == "1" or choice.lower() == "yes": 
+                print("You enter the camp that is lighten with several fires.")
+                print()
+                time.sleep(2)
+                print('You pass a tent and a pale, green arm reaches out to grab your leg.\n"Hhhh-help ussss."\nYou trip and hit your head.')
+                health += 6
+            else:
+                print("You continue walking.")
+                time.sleep(2)
+                print()
+                print("The light from the camp faints away")
+                time.sleep(3)
+                print()
+                print("You find a backpack on the side of the path.\nYou find bandages in it.")
+
+                bandages = 2
+                choice = input("Would you like to use the bandages? \n[1] yes \n[2] no \nEnter choice: ")
+                if choice == "1" or choice.lower() == "yes":
+                    health -= 2
+                    print("Your health is now {health}.")
+
+                print("You continue walking and find a house. \nYou go inside and sleep. Tomorrow is another day...")
+                time.sleep(5)
+                print()
+                print("To be continued.")
+                done = True
+      else:
+        print("You decide that you don't need survival items \nanyway. You continue walking.")
+        print()
+        time.sleep(1)
+        choice = input("You can barely see anything, so far you haven't encountered any troubles. \nIn the distance you see a glowing light, will you go see what it is? \n[1] yes \n[2] no \nEnter choice: ")
+        if choice == "1" or choice.lower() == "yes":
+            print()
+            print("You go towards the light and feel a pain enter your back. You faint.")
+            time.sleep(4)
+            print()
+            print("To be continued.")
+            done = True
+        else: 
+            print()
+            print("You continue walking, but a zombie hears your footsteps and surprise attacks you. You die.")
+            time.sleep(4)
+            print()
+            choice = input("Now what? \n[1] go to checkpoint \n[2] end game \nEnter choice: ")
+            if choice == "1" or choice.lower() == "go to checkpoint" or choice.lower() == "checkpoint":
+                location = "the wild"
+            else:
+                print("Goodbye.")
+                done = True
+  # SEARCH FOR FLASHLIGHT AND PAN
+  elif location == "resturant":
+    print("'Alright, lets go.'")
+    time.sleep(1)
+    print()
+    print("The lights finally turn on and you see that there was \nonly one person.\n'Why did you keep saying 'we' if you're the only one?'")
+    time.sleep(5)
+    print()
+    print("'In case you wanted to attack. Go look \naround for supplies. There should be a flashlight and \nfrying pan lying around somewhere.'")
+    time.sleep(6)
+    print()
+    choice = input("Where do you want to look first?\n[1] current room (dining hall) \n[2] kitchen \nEnter choice: ")
+
+    if choice == "1" or choice.lower() == "current room" or choice.lower() == "dining hall":
+      choice = input("You look around the dining hall and see the \nflashlight that man was talking about. Do you want to \npick it up? \n[1] yes \n[2] no \nEnter choice: ")
+      if choice == "1" or choice.lower() == "yes":
+        flashlight = 1
+        print("You pick up the flashlight.")
+        choice = input ("Do you want to look through the kitchen? \n[1] yes \n[2] no \nEnter choice: ")
+        if choice == "1" or choice.lower() == "yes":
+          print("You look through the kitchen and see the frying \npan.")
+          time.sleep(2)
+          print()
+          choice = input ("Will you pick it up? \n[1] yes \n[2] no \nEnter choice: ")
+          if choice == "1" or choice.lower() == "yes":
+            pan = 1
+            print("You picked up the frying pan.")
+            time.sleep(2)
+          else:
+            print("You leave the frying pan where it is.")
+            time.sleep(2)
+      else:
+        print("You leave the flashlight where it is.")
+        time.sleep(2)
+
+    else: 
+      print("You enter the kitchen and see the frying pan.")
+      choice = input ("Will you pick it up? \n[1] yes \n[2] no \nEnter choice: ")
+      if choice == "1" or choice.lower() == "yes":
+        pan = 1
+        print("You picked up the frying pan.")
+        print()
+        time.sleep(1)
+      else:
+        print("You leave the frying pan where it is.")
+        print()
+        time.sleep(1)
+    choice = input("Do you want to look through the dining room? \n[1] yes \n[2] no \nEnter choice: ")
+    if choice == "1" or choice.lower() == "yes":
+      print("You go back to the dining hall and see the flashlight \nlying on a table.")
+      print()
+      time.sleep(3)
+      choice = input ("Do you want to pick it up? \n[1] yes \n[2] no \nEnter choice: ")
+      if choice == "1" or choice == "yes":
+        flashlight = 1
+        print("You pick up the flashlight.")
+        time.sleep(1)
+        print()
+      else:
+        print("You leave the flashlight where it is. Why would \nyou need that thing at night anyway?")
+        time.sleep(3)
+        print()
+    print("'Okay, let's go.'")
+    location = "the wild 2"
+    # THE WILD WITH STRANGER
+  elif location == "the wild 2":
+    print("The strange man brings you to the back of the \nresturant and slides a large storage shelf over revealing a \nhole in the wall. It must lead to the Wild.")
+    print()
+    time.sleep(6)
+    print("You climb through after the stranger.")    
+    print()
+    time.sleep(2)
+    print("The stranger doesn't say another word as he leads you \n away from the quarantine zone.") 
+    time.sleep(3)
+    print()
+    print("...")
+    print()
+    if flashlight == 0:
+        print("After walking farther away from the resturant, you're\n not able to see anything. The stranger disappeared into the\n dark of the night.")
+        print()
+        time.sleep(6)
+        if pan == 1 and random.ranrange(1,3) == 1:
+            print("A zombie attacks you, but you manage to defeat it. \nYou keep walking with caution and eventually \nfind the stranger.")
+            time.sleep(7)
+            print()
+        else:
+            print("You do what you can to kill the zombie, but it's no use. You die.")
+            print()
+            time.sleep(3)
+            while check == False:
+                choice = input("Would you like to go back to your last checkpoint or end game?\n[1] checkpoint \n[2] end game \nEnter choice: ")
+                if choice == "1" or choice.lower() == "checkpoint" or choice.lower() == "last checkpoint":
+                    check = True
+                    location = "the wild 2"
+                elif choice == "2" or choice.lower() == "end game":
+                    check = True
+                    print()
+                    print("Goodbye.")
+                    done = True
+                else:
+                    check = False
+                    print("Invalid choice, try again.")
+    print("After an hour, you reach an old farm house.")
+    time.sleep(2)
+    print()
+    while check == False:
+        choice = input("Will you follow the man in? \n[1] yes \n[2] no \nEnter choice: ")
+        if choice == "1" or choice.lower() == "yes":
+            check = True
+            choice = input("You follow the stranger in. You search the \nwhole house, but can only find 2 bandages. Will you take them? \n[1] yes \n[2] no \nEnter choice: ")
+            if choice == "1" or choice.lower() == "yes":
+                bandages = 2
+                print("'By the way, what's your name?' You ask the stranger.")
+                time.sleep(2)
+                print()
+                print("'That's not important,' he says. I'll be \nwaiting outside, hurry up.")
+                time.sleep(1)      
+               
+                print("You search the house again, but everything seems \nto be taken already.")
+                time.sleep(5)
+                print()
+                choice = input("Suddenly, you hear a crash. Will you investigate?\n[1] yes \n[2] no \nEnter choice: ")
+            
+                print()
+                print("You walk towards the basement where the sound is coming from.")
+                if flashlight == 1:
+                    print()
+                    print("You turn your flashlight on and \nsee a zombie knocking things over.")
+                    time.sleep(4)
+                    print()
+                    print("The zombie screams when the light \nflashes at it, and it charges at you.")
+                    time.sleep(4)
+                    print()
+                    health += random.randrange(1,10)
+
+                    if pan == 1:
+                        print("You hit the zombie with the pan.\nA.\nPan. There is a zombie charging at you and you use a pan. \nThe zombie bites you, but you survive.")
+                        time.sleep(5)
+                        print()
+                        print("You walk out of the house and you and the stranger continue your journey")
+                        time.sleep(5)
+                        print("To be continued.")
+
+                    else:
+                        print("The zombie attacks you and your only \ndefense is to smack it. You die.")
+                        choice = input("Do you wish to- \n[1] go to a checkpoint \n[2] end game \nEnter choice: ")
+
+                        if choice == "1" or choice.lower() == "checkpoint" or choice.lower() == "go to checkpoint":
+                            location == "the wild 2"
+                        else:
+                            print("Goodbye.")
+                            done = True
+
+        elif choice == "2" or choice.lower() == "no":
+            check = True
+            print("You wait outside the house while the stranger goes in.")
+            print()
+            time.sleep(3)
+            choice = input("You look past the farm house and see a glowing light in the distance. Do you go look? \n[1] yes \n[2] no \nEnter choice: ")
+
+            if choice == "1" or choice.lower() == "yes":
+                print("You leave the stranger in the house and take off on your own.")
+                print()
+                time.sleep(3)
+                print("You encounter a zombie and are too tired from the walking to fight back. You die.")
+                time.sleep(4)
+                print()
+                choice = input("What do you want to do now? \n[1] go to checkpoint \n[2] end game \nEnter choice: ")
+                if choice == "1" or choice.lower() == "go to checkpoint" or choice.lower() == "checkpoint":
+                    location == "the wild 2"
+                else:
+                    print("Goodbye.")
+                    done = True
+            else:
+                print("You decide to stay and wait for the stranger.")
+                print()
+                time.sleep(2)
+                print("The stranger comes running out with zombies trailing behind. \nThe stranger pushes you out of the away and runs past you. \nThe zombies go after you, unfortunately. You die")
+                time.sleep(6)
+                print()
+                choice = input("What do you want to do now? \n[1] go to checkpoint \n[2] end game \nEnter choice: ")
+                if choice == "1" or choice.lower() == "go to checkpoint" or choice.lower() == "checkpoint":
+                    location = "the wild 2"
+                else:
+                    print("Goodbye, {name}.")
+                    done = True
+        else:
+            print("Invalid response. Try again-")
+            check = False
