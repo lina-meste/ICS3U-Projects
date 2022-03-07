@@ -1,0 +1,137 @@
+'''
+Dev: Angelina Mestecanean
+Date: 11/20/19
+Lab: Lab 7: Adventure
+'''
+#VARIABLES
+done = False
+key = 0
+elecator_key = 0
+room_list = []
+current_room = 0
+
+
+room1 = ("You are in what looks like the dungeons.\nThere is a room in every direction except for west.")
+room2 = ("This looks like a dungeon keepers room. \nThe only door is the door you came through.")
+room3 = ("Is this a closet? It's a very dusty, small room. \nThere is only a portrait of a beautiful women with the numbers 21230 on the frame.\nThe only door is the door you came through.")
+room4 = ("This room looks empty except for the many doors. The north door is huge and locked,\ndo you have any keys to open it? There is a door in all directions.")
+room5 = ("You pound on the door despite it being locked. \nIt opens. Looks like a staircase. You go up and immediately \nget sent into a pit of darkness with no escape.\nLooks like you'll be here for awhile.")
+room6 = ("You enter a very tiny room with only a bed and a \nportrait of a women and the Evil Bruh. Could the \nwomen be Lady Moment? You look closer at the picture and find a key.\nNice.")
+room7 = ("Is this supposed to be a living room? You enter a \nhuge room with only a couch in the far corner and \na large, metal door.")
+
+
+#DUNGEON
+room = [room1, 1, 3, 2, None]
+room_list.append(room)
+
+#DUNGEON KEEPER
+room = [room2, None, None, 0, None]
+room_list.append(room)
+
+#CLOSET
+room = [room3, 0, None, None, None]
+room_list.append(room)
+
+#MAIN HALL
+room = [room4, 4, 5, 6, 0]
+room_list.append(room)
+
+#STAIRCASE
+room = [room5, None, None, None, None]
+room_list.append(room)
+
+#MOMENT'S ROOM
+room = [room6, None, None, None, 3]
+room_list.append(room)
+
+#LIVINGROOM
+room = [room7, 3, None, 7, None]
+room_list.append(room)
+
+
+
+
+
+#INTRO- using strings
+print("Welcome to the Great Capture of the Evil Bruh and Lady Moment.")
+print("Due to events during the Great Escape (see lab 4), you have been")
+print("taken by the Evil Bruh and brought to his manor. Will you meet")
+print("his beloved wife, escape, die, etc? Who knows. This game is based")
+print("on your actions alone. Good luck, try not to die.")
+print()
+
+#--MAIN GAME--
+while done == False:
+    print(room_list[current_room][0])
+    print()
+
+
+    #WHERE TO GO ---USER INPUT---
+    user_input = input("Where do you want to go? ")
+    print()
+
+    #GOING NORTH
+    if user_input.lower() == "n" or user_input.lower()=="north":
+        next_room = room_list[current_room][1]
+        print()
+    
+        #CAN'T GO NORTH
+        if next_room == None:
+            print("There doesn't seem to be a door.")
+            print()
+    
+        #RESETS VALUE
+        else:
+            current_room = next_room
+
+    #GOING EAST
+    
+    if user_input.lower() == "e" or user_input.lower()=="east":
+        next_room = room_list[current_room][3]
+        print()
+        if next_room == None:
+            print("There doesn't seem to be a door.")
+            print()
+        else:
+            current_room = next_room
+
+    #GOING SOUTH
+    if user_input.lower() == "s" or user_input.lower()=="south":
+        next_room = room_list[current_room][2]
+        print()
+
+        if next_room == None:
+            print("There doesn't seem to be a door.")
+            print()
+
+        else:
+            current_room = next_room
+
+    #GOING WEST
+    if user_input.lower() == "w" or user_input.lower()=="west":
+        next_room = room_list[current_room][4]
+        print()
+
+        if next_room == None:
+            print("There doesn't seem to be a door.")
+            print()
+            
+
+        else:
+            current_room = next_room
+            
+    if user_input.lower()== "q" or user_input.lower() == "quit":
+        print("You are tired of all of the searching and faint. \nYou wake up in a dark pit. You could be here for awhile.")
+        done = True
+
+    if current_room == 4:
+        print("You pound on the door despite it being locked. \nIt opens. Looks like a staircase. You go up and immediately \nget sent into a pit of darkness with no escape.\nLooks like you'll be here for awhile.")
+        done = True
+
+    if current_room == 7:
+        print("The door opens up to an elevator. You open the doors \nand a swarm of black dust attacks you. You pass out \nand wake up in a pit of darkness and \nno escape. Looks like you'll be here for awhile.")
+        done = True
+
+
+        
+        
