@@ -1,0 +1,400 @@
+# This game was part of my grade 11 CPT
+
+def boss():
+
+    def instructions():
+        print("When you are done reading, press ENTER.")
+        print()
+        print("There is a chance that all moves - other than 'USE PAPER' - have a chance of backfiring. \n\nYou have the following moves: \nCharge\nUse water\nUse brushes\nUse paper\n\CHARGE: if successful, it deals 20-25 damage to the prinicpal.\nIf CHARGE fails, drones gain 5-7 power and the principal gains 10-15 health. \n\nWATER: water can deal 22-27 damage to the teacher, but if you miss you get dealt 1-5 damage. \n\nBRUSHES: you can gain 5-7 health and the principal is dealt 4-6 damage. If you miss, drones gain 10-20 power and the principal gains 5-15 health \n\nPAPER: paper deals 4-5 damage with no chance of failing.")
+        print()
+        done = input("")
+        battle()
+
+    def intro():
+        check = True
+        import sys
+
+        while check == True:
+            user = input("[1] Start battle \n[2] Read intructions \n[3] Quit \nEnter choice: ")
+
+            if user == "1" or user.lower() == "start battle" or user.lower() == "start" or user.lower() == "battle":
+                print()
+                battle()
+                check = False
+            elif user == "2" or user.lower() == "read instructions" or user.lower() == "instructions" or user.lower() == "read":
+                print()
+                instructions()
+                check = False
+            elif user == "3" or user.lower() == "quit" or user.lower() == "q":
+                print("You came all this way, but you decide it isn't worth your time anymore. \nYou walk out of the class. Game over.")
+                sys.exit
+                check = False
+            else:
+                print("Not a valid response - try again.")
+                check = True
+
+
+    def battle():
+        import random
+        import time
+        import sys
+
+        done = False
+        check = True
+
+        boss_health = 100
+
+        health = 100
+
+        student_power = 0
+
+        # INTRO
+        print("You approach your boss. Suddenly, students begin to form a circle around you and the principal.")
+        print()
+
+        while done == False:
+            if health <= 0:
+                print()
+                print("Your health has reached critical levels and you faint. Game over.")
+                sys.exit
+            if boss_health <= 0:
+                print()
+                print("The principal has reached critical levels - he faints. You win this time...")
+                done = True
+                
+            while check == True:
+                move = input("Choose your move: \n[1] Charge \n[2] Use water \n[3] Use brushes \n[4] Use paper \nEnter choice: ")
+                print()
+
+                # YOUR MOVES
+
+                if move == "1" or move.lower() == "charge":
+                    print()
+                    if random.randrange(1,2) == 2:
+                        print("You are successful!")
+                        boss_health -= random.randrange(20,25)
+                        print(f"His health is now at {boss_health}!")
+                        print()
+                        check = False
+                    else:
+                        print("You aren't successful. You miss the principal and charge into the students. This fuels their anger! \nThe students give the principal an energy bar and he gains energy.")
+                        time.sleep(2)
+                        if student_power >= 0:
+                            student_power += random.randrange(5,7)
+                        boss_health += random.randrange(10,15)
+                        print(f"Their anger level is now {student_power} and the principal's health is now {boss_health}!")
+                        print()
+                        check = False
+                elif move == "2" or move.lower() == "use water" or move.lower() == "water":
+                    print("You pour water on the ground!")
+                    print()
+                    if random.randrange(1,2) == 1:
+                        print("You are successful! Your boss slips in the water.")
+                        boss_health -= random.randrange(22,27)
+                        print(f"His health is now at {boss_health}!")
+                        print()
+                        check = False
+                    else:
+                        print("You aren't successful! Your boss avoids the water and splashes you with some of it.")
+                        time.sleep(2)
+                        health -= random.randrange(1,5)
+                        print(f"Your health is now {health}!")
+                        print()
+                        check = False
+                elif move == "3" or move.lower() == "use brushes" or move.lower() == "brushes":
+                    print("You throw the brushes at the teacher!")
+                    print()
+                    if random.randrange(1,3) == 1:
+                        print("You miss and hit the students! This fuels their anger. They give the prinicpal red bull, and he gains health")
+                        student_power += random.randrange(10,20)
+                        if boss_health <= 99:
+                            boss_health += random.randrange(5,15)
+                        print(f"Their anger level is now {student_power} and your boss' health is {boss_health}!")
+                        print()
+                        check = False
+                    else:
+                        print("You are successful! The brushes hit him and you gain more health.")
+                        boss_health -= random.randrange(4,6)
+                        if health <= 99:
+                            health += random.randrange(5,7)
+                        print(f"His health is now at {boss_health} and yours is {health}!")
+                        print()
+                        check = False
+                elif move == "4" or move.lower() == "use paper" or move.lower() == "paper":
+                    print("You throw paper at the teacher - this leaves papercuts.")
+                    boss_health -= random.randrange(4,5)
+                    print(f"His health is now {boss_health}!")
+                    print()
+                    check = False
+                else:
+                    print("That isn't a move - try again.")
+                    check = True
+
+
+            # BOSS MOVES
+
+            if random.randrange(1,4) == 1:
+                print("Your boss charges!")
+                print()
+                if random.randrange(1,2) == 2:
+                    print("He is successful!")
+                    health -= random.randrange(20,25)
+                    print(f"Your health is now at {health}!")
+                    print()
+                else:
+                    print("He isn't successful. He misses you and charges into his students. They lose some anger towards you and deal damage to him.")
+                    time.sleep(3)
+                    if student_power >= 5:
+                        student_power -= random.randrange(5)
+                    boss_health -= random.randrange(10,15)
+                    print(f"Their anger level is now {student_power} and the principal's health is now {boss_health}!")
+                    print()
+            elif random.randrange(1,4) == 2:
+                print("Your boss summons his student drones to attack you!")
+                print()
+                if student_power >= 1 and random.randrange(1,3) == 2:
+                    health -= student_power
+                    print(f"He is successful and his student drones deal {student_power} damage!")
+                    print(f"Your health is now {health}!")
+                    print()
+                else:
+                    print("He isn't successful, the students just mumble and shake their head. \nNo damage is dealt to anyone.")
+                    print()
+            elif random.randrange(1,3) == 2:
+                print("Your boss throws failed tests at you.\nThey're from your students - this deals automatic damage.")
+                health -= random.randrange(16,21)
+                time.sleep(3)
+                print(f"Your health is now {health}!")
+                print()
+            else:
+                print("Your boss lowers your salary. This excites his student drones - they are now more powerful! \nNo damage is dealt towards anyone.")
+                student_power += random.randrange(10,15)
+                print(f"Their anger level is now {student_power}!")
+                print()
+            if health <= 0:
+                print()
+                print("Your health has reached critical levels and you faint. Game over.")
+                sys.exit
+            if boss_health <= 0:
+                print()
+                print("The principal has reached critical levels - he faints. You win this time...")
+                break
+                done = True
+            check = True
+    def search():
+        import time
+        import sys
+
+        # VARIABLES
+        done = False
+        room_list = []
+        current_room = 0
+
+        # PLAYER INVENTORY
+        user_inv = []
+
+        brushes = False
+        bucket = False
+        notepad = False
+
+        check = False
+
+        atrium = ("You are in the atrium.\nThere is a room in every direction.")
+        office = ("This looks like the office. It's empty. Where's the principal? \nThe only door is the door you came through.")
+        hall2 = ("You go down a hall. The atrium is to the west, and the only room is the gym, which is east.")
+        gym = ("You walk into the gym, the only way out is the door you came through.")
+        hall1 = ("You enter the hall. There are two doors - the science class is north and the math room is to the south.")
+        math = ("You enter a math class and see students taking a solving an equation on the \nboard. All the numbers except for '4 9 8 1' were wiped off. The only way you \ncan leave is through the door you came from.")
+        science = ("You walk into a science class - there is a closet to the west and the \ndoor to the hall is south.")
+        closet = ("You enter the closet.")
+        hall3 = ("Youe enter a hall. There is a janitor closet to the west and your classroom is to the east.")
+        janitor = ("You approach the janitor closet door protected by a number pad.")
+        janitor_open = ("The janitor door opens.")
+        art = ("You enter the art room.")
+
+        # ATRIUM
+        room = [atrium, 1, 2, 8, 4]
+        room_list.append(room)
+
+        # OFFICE
+        room = [office, None, None, 0, None]
+        room_list.append(room)
+
+        # HALL2
+        room = [hall2, None, 3, None, 0]
+        room_list.append(room)
+
+        # GYM
+        room = [gym, None, None, None, 2, "notepad"]
+        room_list.append(room)
+
+        # HALL1
+        room = [hall1, 6, 0, 5, None]
+        room_list.append(room)
+
+        # MATH
+        room = [math, 4, None, None, None]
+        room_list.append(room)
+
+        # SCIENCE
+        room = [science, None, None, 4, 7]
+        room_list.append(room)
+
+        # CLOSET
+        room = [closet, None, 6, None, None, "brushes"]
+        room_list.append(room)
+
+        # HALL3
+        room = [hall3, 0, 11, None, 9]
+        room_list.append(room)
+
+        # JANITOR
+        room = [janitor, None, 8, None, 10]
+        room_list.append(room)
+
+        # JANITOR CLOSET
+        room = [janitor_open, None, 9, None, None, "bucket"]
+        room_list.append(room)
+
+        # ART
+        room = [art, None, None, None, 8]
+        room_list.append(room)
+
+        # INTRO
+
+        print("YEAR ONE - Grade 9 \nIt was difficult, but you finally got a job as a high school teacher. \nFor your first year, you're teaching grade 9 art! \nYour task is to search the main floor for supplies. Head to your classroom when you're done. \n\nTo move enter: north/n, south/s, etc. \n\nType 'q' or 'quit' at any time to leave and 'i' or ' inventory' will open your inventory.")
+        time.sleep(4)
+        print()
+
+        #--MAIN GAME--
+        while done == False:
+            # prints room
+            print(room_list[current_room][0])
+            print()
+
+            # WHERE TO GO ---USER INPUT---
+            user_input = input("Where do you want to go? ")
+            print()
+
+            # GOING NORTH
+            if user_input.lower() == "n" or user_input.lower()=="north":
+                next_room = room_list[current_room][1]
+                print()
+            
+                # CAN'T GO NORTH
+                if next_room == None:
+                    print("There doesn't seem to be a door.")
+                    print()
+            
+                # RESETS VALUE
+                else:
+                    current_room = next_room
+            # GOING EAST
+            elif user_input.lower() == "e" or user_input.lower()=="east":
+                next_room = room_list[current_room][2]
+                print()
+                if next_room == None:
+                    print("There doesn't seem to be a door.")
+                    print()
+                else:
+                    current_room = next_room
+            # GOING SOUTH
+            elif user_input.lower() == "s" or user_input.lower()=="south":
+                next_room = room_list[current_room][3]
+                print()
+
+                if next_room == None:
+                    print("There doesn't seem to be a door.")
+                    print()
+                else:
+                    current_room = next_room
+            # GOING WEST
+            elif user_input.lower() == "w" or user_input.lower()=="west":
+                next_room = room_list[current_room][4]
+                print()
+
+                if next_room == None:
+                    print("There doesn't seem to be a door.")
+                    print()
+                else:
+                    current_room = next_room
+            elif user_input.lower()== "q" or user_input.lower() == "quit":
+                print("You are tired of all of the searching. \nYou realize teaching isn't for you, and your boss is the worst. \nYou walk out.")
+                done = True
+            elif user_input.lower() == "i" or user_input.lower() == "inventory":
+                print()
+                print(f"Inventory: \n{user_inv}")
+                print()
+            else:
+                print()
+                print("Invalid input - try again.")
+                print()
+            if bucket == True:
+                user_inv.append(bucket)
+            if current_room == 11 and room_list[10][5] == None and room_list[7][5] == None and room_list[3][5] == None:
+                    print()
+                    while check == False:
+                        fight = input("A wild principal appears. He tells you the supplies are no longer needed - he looks angry. \nWill you approach? \n[1] Yes \n[2] No \nEnter choice: ")
+
+                        if fight.lower() == "yes" or fight == "1":
+                            print()
+                            intro()
+                            check = True
+                            done = True
+                        elif fight.lower() == "no" or fight == "2":
+                            print()
+                            print("You figure you'll lose either way and apologize. Your boss doesn't like this, and performs a sneak attack. You die.")
+                            time.sleep(30)
+                            sys.exit()
+                            check = True
+                        else:
+                            print("Not a valid response - try again.")               
+            elif current_room == 11 and bucket == False:
+                print("You don't have all the supplies yet.")
+                print() 
+            elif current_room == 11 and brushes == False:
+                print("You don't have all the supplies yet.")
+                print()
+            elif current_room == 11 and notepad == False:
+                print("You don't have all the supplies yet.")
+                print()
+            
+            if current_room == 9 and user_input.lower() == "w":
+                print(janitor)
+                while True:
+                    try:
+                        code = int(input("Enter the code: "))
+                        print()
+
+                        if code == 4981:
+                            current_room = 10
+                            break
+                        else:
+                            print("Incorrect code.")
+                            current_room = 8
+                            break
+                    except ValueError:
+                        print("Please enter a number code.")
+                        print()
+            
+            if current_room == 10 and room_list[10][5] != None:
+                user_inv.append(room_list[10][5])
+                room_list[10][5] = None
+                print("You pick up a bucket to fill with water.")
+
+            if current_room == 7 and room_list[7][5] != None:
+                user_inv.append(room_list[7][5])
+                room_list[7][5] = None
+                print("You see paint brushes lying on the floor and pick them up.")
+            
+            if current_room == 3 and room_list[3][5] != None:
+                user_inv.append(room_list[3][5])
+                room_list[3][5] = None
+                print("You see a drawing notepad on the bleachers and pick it up.")
+    search()   
+
+from con import *
+
+if __name__ == "__main__":
+    boss()
+    con10()
