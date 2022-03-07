@@ -1,0 +1,150 @@
+def boss():
+    import random
+    import time
+    import sys
+
+    done = False
+    check = True
+
+    boss_health = 100
+
+    health = 100
+
+    student_power = 0
+
+    # INTRO
+    print("You approach your boss. Suddenly, students begin to form a circle around you and the principal.")
+    print()
+
+    while done == False:
+        if health <= 0:
+            print()
+            print("Your health has reached critical levels and you faint. Game over.")
+            sys.exit
+        if boss_health <= 0:
+            print()
+            print("The principal has reached critical levels - he faints. You win this time...")
+            done = True
+            
+        while check == True:
+            move = input("Choose your move: \n[1] Charge \n[2] Use water \n[3] Use brushes \n[4] Use paper \nEnter choice: ")
+            print()
+
+            # YOUR MOVES
+
+            if move == "1" or move.lower() == "charge":
+                print()
+                if random.randrange(1,2) == 2:
+                    print("You are successful!")
+                    boss_health -= random.randrange(20,25)
+                    print(f"His health is now at {boss_health}!")
+                    print()
+                    check = False
+                else:
+                    print("You aren't successful. You miss the principal and charge into the students. This fuels their anger!")
+                    time.sleep(2)
+                    if student_power >= 0:
+                        student_power += random.randrange(5,7)
+                    boss_health -= random.randrange(10,15)
+                    print(f"Their anger level is now {student_power} and the principal's health is now {boss_health}!")
+                    print()
+                    check = False
+            elif move == "2" or move.lower() == "use water" or move.lower() == "water":
+                print("You pour water on the ground!")
+                print()
+                if random.randrange(1,2) == 1:
+                    print("You are successful! Your boss slips in the water.")
+                    boss_health -= random.randrange(22,27)
+                    print(f"His health is now at {boss_health}!")
+                    print()
+                    check = False
+                else:
+                    print("You aren't successful! Your boss avoids the water and splashes you with some of it.")
+                    time.sleep(2)
+                    health -= random.randrange(1,5)
+                    print(f"Your health is now {health}!")
+                    print()
+                    check = False
+            elif move == "3" or move.lower() == "use brushes" or move.lower() == "brushes":
+                print("You throw the brushes at the teacher!")
+                print()
+                if random.randrange(1,3) == 1:
+                    print("You miss and hit the students! This fuels their anger. They give the prinicpal red bull, and he gains health")
+                    student_power += random.randrange(10,20)
+                    if boss_health <= 99:
+                        boss_health += random.randrange(5,15)
+                    print(f"Their anger level is now {student_power} and your boss' health is {boss_health}!")
+                    print()
+                    check = False
+                else:
+                    print("You are successful! The brushes hit him and you gain more health.")
+                    boss_health -= random.randrange(4,6)
+                    if health <= 99:
+                        health += random.randrange(5,7)
+                    print(f"His health is now at {boss_health} and yours is {health}!")
+                    print()
+                    check = False
+            elif move == "4" or move.lower() == "use paper" or move.lower() == "paper":
+                print("You throw paper at the teacher - this leaves papercuts.")
+                boss_health -= random.randrange(4,5)
+                print(f"His health is now {boss_health}!")
+                print()
+                check = False
+            else:
+                print("That isn't a move - try again.")
+                check = True
+
+
+        # BOSS MOVES
+
+        if random.randrange(1,4) == 1:
+            print("Your boss charges!")
+            print()
+            if random.randrange(1,2) == 2:
+                print("He is successful!")
+                health -= random.randrange(20,25)
+                print(f"Your health is now at {health}!")
+                print()
+            else:
+                print("He isn't successful. He misses you and charges into his students. They lose some anger towards you and deal damage to him.")
+                time.sleep(3)
+                if student_power >= 5:
+                    student_power -= random.randrange(5)
+                boss_health -= random.randrange(10,15)
+                print(f"Their anger level is now {student_power} and the principal's health is now {boss_health}!")
+                print()
+        elif random.randrange(1,4) == 2:
+            print("Your boss summons his student drones to attack you!")
+            print()
+            if student_power >= 1 and random.randrange(1,3) == 2:
+                health -= student_power
+                print(f"He is successful and his student drones deal {student_power} damage!")
+                print(f"Your health is now {health}!")
+                print()
+            else:
+                print("He isn't successful, the students just mumble and shake their head. \nNo damage is dealt to anyone.")
+                print()
+        elif random.randrange(1,3) == 2:
+            print("Your boss throws failed tests at you.\nThey're from your students - this deals automatic damage.")
+            health -= random.randrange(16,21)
+            time.sleep(3)
+            print(f"Your health is now {health}!")
+            print()
+        else:
+            print("Your boss lowers your salary. This excites his student drones - they are now more powerful! \nNo damage is dealt towards anyone.")
+            student_power += random.randrange(10,15)
+            print(f"Their anger level is now {student_power}!")
+            print()
+
+        if health <= 0:
+            print()
+            print("Your health has reached critical levels and you faint. Game over.")
+            sys.exit
+        if boss_health <= 0:
+            print()
+            print("The principal has reached critical levels - he faints. You win this time...")
+            done = True
+        check = True
+
+if __name__ == "__main__":
+    boss()
